@@ -1,0 +1,25 @@
+ .gitattributes                                     |   2 [32m+[m
+ .gitignore                                         |  33 [32m++[m
+ .mvn/wrapper/maven-wrapper.properties              |   3 [32m+[m
+ README.md                                          |  69 [32m++++[m
+ mvnw                                               | 295 [32m++++++++++++++++[m
+ mvnw.cmd                                           | 189 [32m++++++++++[m
+ pom.xml                                            |  68 [32m++++[m
+ src/main/java/com/example/expenseapi/ApiError.java |   3 [32m+[m
+ .../example/expenseapi/ApiExceptionHandler.java    |  21 [32m++[m
+ .../example/expenseapi/ExpenseApiApplication.java  |  13 [32m+[m
+ .../example/expenseapi/ExpenseCategorySummary.java |   9 [32m+[m
+ .../com/example/expenseapi/ExpenseController.java  | 131 [32m+++++++[m
+ .../java/com/example/expenseapi/ExpenseEntity.java |  66 [32m++++[m
+ .../example/expenseapi/ExpensePageResponse.java    |  11 [32m+[m
+ .../com/example/expenseapi/ExpenseRepository.java  |  40 [32m+++[m
+ .../com/example/expenseapi/ExpenseResponse.java    |  18 [32m+[m
+ .../com/example/expenseapi/ExpenseService.java     | 167 [32m+++++++++[m
+ .../com/example/expenseapi/HealthController.java   |  17 [32m+[m
+ .../com/example/expenseapi/HelloController.java    |  19 [32m+[m
+ src/main/resources/application.properties          |   5 [32m+[m
+ .../expenseapi/ExpenseApiApplicationIT.java        |  15 [32m+[m
+ .../java/com/example/expenseapi/ExpenseApiIT.java  | 383 [32m+++++++++++++++++++++[m
+ .../example/expenseapi/ExpenseControllerTest.java  | 234 [32m+++++++++++++[m
+ .../example/expenseapi/ExpenseRepositoryIT.java    |  40 [32m+++[m
+ 24 files changed, 1851 insertions(+)
