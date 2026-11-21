@@ -80,3 +80,18 @@ Chạy toàn bộ test bằng lệnh sau.
 ```
 
 Kết quả thành công là `BUILD SUCCESS`.
+
+## Thống kê chi tiêu theo tháng
+
+Khi ứng dụng đang chạy, mở địa chỉ
+`http://localhost:8080/expenses/summary?month=2026-11&minTotal=30000`.
+
+- `month=2026-11` chọn các khoản chi trong tháng 11 năm 2026.
+- `minTotal=30000` giữ những danh mục có tổng tiền từ 30.000 trở lên.
+
+Mỗi nhóm trong phản hồi có ba trường:
+
+- `category` là tên danh mục.
+- `expenseCount` là số khoản chi được tính trong nhóm.
+- `totalAmount` là tổng số tiền của nhóm.
+Kết quả phụ thuộc vào dữ liệu đang lưu trong SQL Server.
