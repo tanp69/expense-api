@@ -66,3 +66,17 @@ powerShell
 $env:EXPENSE_DB_PASSWORD = [System.Net.NetworkCredential]::new(
 '', (Read-Host 'Mat khau SQL Server cua expense_app' -AsSecureString)
 ).Password
+
+## Chạy kiểm thử
+
+Cần SQL Server đang chạy, database `expense_test_db` có cấu trúc
+bảng phù hợp và biến môi trường `EXPENSE_DB_PASSWORD` đã được đặt
+trong cửa sổ PowerShell.
+
+Chạy toàn bộ test bằng lệnh sau.
+
+```powershell
+.\mvnw.cmd verify
+```
+
+Kết quả thành công là `BUILD SUCCESS`.
