@@ -16,6 +16,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import org.springframework.data.domain.Page;
 import java.time.LocalDate;
 import java.time.YearMonth;
@@ -83,7 +87,8 @@ public class ExpenseController {
 
     @PostMapping("/expenses")
     @ResponseStatus(HttpStatus.CREATED)
-    public ExpenseEntity createExpense(@RequestBody CreateExpenseRequest request) {
+    public ExpenseEntity createExpense(
+            @Valid @RequestBody CreateExpenseRequest request) {
         return expenseService.createExpense(
                 request.amount(),
                 request.category(),
@@ -111,8 +116,13 @@ public class ExpenseController {
     }
 
     public record CreateExpenseRequest(
+            @NotNull(message = "Amount must be greater than zero")
+            @Positive(message = "Amount must be greater than zero")
             Long amount,
+
+            @NotBlank(message = "Category is required")
             String category,
+
             LocalDate expenseDate
     ) {}
 

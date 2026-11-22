@@ -1,6 +1,7 @@
 package com.example.expenseapi;
 
 import java.time.LocalDate;
+import org.springframework.test.context.ActiveProfiles;
 import java.util.*;
 import com.jayway.jsonpath.JsonPath;
 import org.junit.jupiter.api.Test;
@@ -23,9 +24,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 
-@SpringBootTest(properties =
-        "spring.datasource.url=jdbc:sqlserver://127.0.0.1:1433;"
-                + "databaseName=expense_test_db;encrypt=true;trustServerCertificate=true")
+@SpringBootTest
+@ActiveProfiles("test")
 @AutoConfigureMockMvc
 @Transactional
 class ExpenseApiIT {
