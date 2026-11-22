@@ -10,6 +10,8 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.time.LocalDate;
 import java.time.YearMonth;
 
@@ -17,6 +19,9 @@ import java.time.YearMonth;
 public class ExpenseService {
 
     private final ExpenseRepository repository;
+
+    private static final Logger log =
+            LoggerFactory.getLogger(ExpenseService.class);
 
     public ExpenseService(ExpenseRepository repository) {
         this.repository = repository;
@@ -37,9 +42,21 @@ public class ExpenseService {
         }
     }
 
-    public ExpenseEntity createExpense(Long amount, String category, LocalDate expenseDate) {
+    public ExpenseEntity createExpense(
+            Long amount,
+            String category,
+            LocalDate expenseDate) {
+
         validateExpense(amount, category);
-        return repository.save(new ExpenseEntity(amount, category, expenseDate));
+        validateExpenseDate(expenseDate);
+
+        ExpenseEntity savedExpense = repository.save(
+                new ExpenseEntity(amount, category, expenseDate)
+        );
+
+        log.info("Saved expense id={}", savedExpense.getId());
+
+        return savedExpense;
     }
 
 
@@ -62,6 +79,8 @@ public class ExpenseService {
                     HttpStatus.BAD_REQUEST, "Category is required");
         }
     }
+
+
 
     @Transactional
     public ExpenseEntity updateExpenseDate(long id, LocalDate expenseDate) {

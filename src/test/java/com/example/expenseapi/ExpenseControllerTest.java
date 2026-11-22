@@ -12,6 +12,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verifyNoInteractions;
@@ -22,6 +23,8 @@ import org.springframework.test.util.ReflectionTestUtils;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 class ExpenseControllerTest {
 
@@ -227,8 +230,42 @@ class ExpenseControllerTest {
         verifyNoInteractions(repository);
     }
 
+    @Test
+    void rejectsMissingAmount() throws Exception {
+        MvcResult result = mvc.perform(post("/expenses").contentType(MediaType.APPLICATION_JSON)
+                .content("""
+                            {"category":"food"}
+                            """))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.status").value(400))
+                .andExpect(jsonPath("$.message").value("Amount must be greater than zero"))
+                .andReturn();
 
+        verifyNoInteractions(repository);
 
+        assertInstanceOf(
+                MethodArgumentNotValidException.class,
+                result.getResolvedException()
+        );
 
+    }
 
+    @Test
+    void returnsErrorsForAmountAndCategory() throws Exception {
+        mvc.perform(post("/expenses")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("""
+                            {"amount":0,"category":" "}
+                            """))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.status").value(400))
+                .andExpect(jsonPath("$.message").value("Amount must be greater than zero"))
+                .andExpect(jsonPath("$.fieldErrors.length()").value(2))
+                .andExpect(jsonPath("$.fieldErrors[0].field").value("amount"))
+                .andExpect(jsonPath("$.fieldErrors[0].message").value("Amount must be greater than zero"))
+                .andExpect(jsonPath("$.fieldErrors[1].field").value("category"))
+                .andExpect(jsonPath("$.fieldErrors[1].message").value("Category is required"));
+
+        verifyNoInteractions(repository);
+    }
 }

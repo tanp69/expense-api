@@ -30,8 +30,9 @@ $result.StatusCode
 $result.Content
 ```
 
-Kết quả mong đợi là `201 Created`. Nếu đây là lần tạo thành công đầu tiên
-kể từ khi khởi động, khoản mới có `id` là `3`.
+Kết quả mong đợi là `201 Created`.
+Dùng `id` trong phản hồi để gọi API xem, sửa hoặc xóa khoản chi.
+Danh sách trả về phụ thuộc vào dữ liệu đang lưu trong database.
 
 Gọi lại `GET /expenses?category=travel` để thấy cả khoản mẫu 20.000 đồng
 và khoản vừa tạo 25.000 đồng.
@@ -95,3 +96,14 @@ Mỗi nhóm trong phản hồi có ba trường:
 - `expenseCount` là số khoản chi được tính trong nhóm.
 - `totalAmount` là tổng số tiền của nhóm.
 Kết quả phụ thuộc vào dữ liệu đang lưu trong SQL Server.
+##
+Set-Location 'C:\Users\24001\Documents\Codex'
+git clone https://github.com/tanp69/expense-api.git expense-api-check
+Set-Location .\expense-api-check
+
+.\mvnw.cmd verify
+##
+java -jar .\target\expense-api-0.0.1-SNAPSHOT.jar --server.port=8082
+##
+Invoke-RestMethod -Uri 'http://localhost:8082/health'
+Invoke-RestMethod -Uri 'http://localhost:8082/expenses'
