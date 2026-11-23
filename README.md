@@ -107,3 +107,10 @@ java -jar .\target\expense-api-0.0.1-SNAPSHOT.jar --server.port=8082
 ##
 Invoke-RestMethod -Uri 'http://localhost:8082/health'
 Invoke-RestMethod -Uri 'http://localhost:8082/expenses'
+
+
+## cach mo database
+
+Ctrl + O
+fileName -> C:\Users\24001\OneDrive\Desktop\expense-api\expense-api\database\setup.sql
+Open
